@@ -19,6 +19,11 @@ class Api::ProductsController < ApplicationController
     )
     @products.save
     render "show.json.jb"
+    # if @products.save
+    #   render "show.json.jb"
+    # else 
+    #   render json: { errors: @products.errors.full_message }, status: 406
+    # end 
   end
 
   def update
