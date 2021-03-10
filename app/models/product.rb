@@ -10,10 +10,12 @@ class Product < ApplicationRecord
   #   Supplier.find_by(id: supplier_id)
   # end
 
+  # def images
+    #   Image.where(product_id: id)
+    # end
+
 belongs_to :supplier
-
-def images
-  Image.where(product_id: id)
-end
-
+has_many :images
+has_many: orders
+ 
 end
