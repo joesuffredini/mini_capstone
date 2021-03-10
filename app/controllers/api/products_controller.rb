@@ -1,7 +1,7 @@
 class Api::ProductsController < ApplicationController
   def index
-    @products = Product.all
-    render "index.json.jb"
+      @products = Product.all
+      render "index.json.jb"
   end
 
   def show
@@ -14,17 +14,25 @@ class Api::ProductsController < ApplicationController
     @products = Product.new(
       name: params[:name],
       price: params[:price],
-      image_url: params[:image_url],
+      # image_url: params[:image_url],
       description: params[:description],
+      supplier_id: params[:supplier_id],
     )
+#Happy/sad path
     @products.save
     render "show.json.jb"
-    # if @products.save
-    #   render "show.json.jb"
-    # else 
-    #   render json: { errors: @products.errors.full_message }, status: 406
-    # end 
+    if @products.save
+      render "show.json.jb"
+    else 
+      render json: { errors: @products.errors.full_message }, status: 406
+    end 
   end
+
+  def show
+    @product = Product.find_by(id: params[:id])
+    render "show.json.jb"
+  end
+
 
   def update
     input = params[:id]
@@ -33,9 +41,15 @@ class Api::ProductsController < ApplicationController
     @products.price = params[:price] || @products.price
     @products.image_url = params[:image_url] || @products.image_url
     @products.description = params[:description] || @products.description
-    @products.save
-    render "show.json.jb"
+
+#Happy/sad path
+    if @product.save
+      render "show.json.jb"
+    else
+      render json: { errors: @product.errors.full_messages }, status: 406
+    end
   end
+
 
   def destroy
     input = params[:id]
