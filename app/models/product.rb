@@ -6,11 +6,11 @@ class Product < ApplicationRecord
   #   price <= 10
   # end
 
-  def supplier
-    Supplier.find_by(id: supplier_id)
-  end
+  # def supplier
+  #   Supplier.find_by(id: supplier_id)
+  # end
 
-#belongs_to :supplier
+belongs_to :supplier
 
 def images
   Image.where(product_id: id)
